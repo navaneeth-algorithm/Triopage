@@ -125,7 +125,7 @@ class _LoginContainerState extends State<LoginContainer> {
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xff7D8CA1))),
                     prefixIcon: Icon(
-                      Icons.phone,
+                      Icons.person,
                       color: Color(0xff7D8CA1),
                     ),
                     hintText: "Enter Username",
