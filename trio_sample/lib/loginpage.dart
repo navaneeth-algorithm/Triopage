@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'registerpage.dart';
 import 'loadingscreen.dart';
@@ -46,20 +48,40 @@ class _LoginContainerState extends State<LoginContainer> {
     if (_formKey.currentState.validate()) {
       //print(username.value.text);
       //print(userfirstname);
-      submitDialog(context);
 
-      /*  http.Response response = await http.post(url, body: {
-        "type": "userverify",
-        "username": username,
+      submitDialog(context);
+      Map data = {
+        "email": username,
         "password": password,
-      });
+      };
+      // Map data = {"email": "hanson@gmail.com", "password": "123"};
+
+      var body = json.encode(data);
+
+      http.Response response = await http.post(
+          "http://18.130.82.119:3030/api/v1/sign_in",
+          headers: {"Content-Type": "application/json"},
+          body: body);
+
+      // print("ResPonse :" + response.body);
+
+      var dataUser = json.decode(response.body);
+
+      //print(dataUser["user-token"]);
+
+      // Map data = {"email": "hanson@gmail.com", "password": "123"};
+
       Navigator.pop(context);
-      print("ResPonse :" + response.body);*/
-      var dataUser = 'success'; //json.decode(response.body);
-      print(dataUser);
-      Navigator.pop(context);
-      if (dataUser != 'Fail') {
+      //Navigator.pop(context);
+
+      //var dataUser = json.decode(response.body);
+
+      // print(dataUser["user-token"]);
+
+      //Navigator.pop(context);
+      if (dataUser["auth_token"] != null) {
         // setUserId(dataUser[0]["Id"]);
+        setUserId(dataUser["auth_token"]);
 
         Navigator.push(
             context,
@@ -119,7 +141,7 @@ class _LoginContainerState extends State<LoginContainer> {
                       return null;
                     }
                   },
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -128,7 +150,7 @@ class _LoginContainerState extends State<LoginContainer> {
                       Icons.person,
                       color: Color(0xff7D8CA1),
                     ),
-                    hintText: "Enter Username",
+                    hintText: "Enter Email id",
                     hintStyle: TextStyle(color: Color(0xff7D8CA1)),
                   ),
                 ),

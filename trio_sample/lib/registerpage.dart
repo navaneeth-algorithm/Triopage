@@ -49,18 +49,27 @@ class _RegisterContainerState extends State<RegisterContainer> {
     //print(userfirstname);
     submitDialog(context);
 
-    http.Response response = await http.post(url, body: {
-      "type": "userregistration",
-      "firstname": userfirstname,
-      "password": userpassword,
-      "emailid": useremail,
-    });
+    Map data = {
+      "user": {
+        "email": useremail,
+        "password": userpassword,
+        "name": userfirstname
+      }
+    };
+    // Map data = {"email": "hanson@gmail.com", "password": "123"};
+
+    var body = json.encode(data);
+
+    http.Response response = await http.post(
+        "http://18.130.82.119:3030/api/v1/sign_up",
+        headers: {"Content-Type": "application/json"},
+        body: body);
     Navigator.pop(context);
     print("ResPonse :" + response.body);
     var dataUser = json.decode(response.body);
     //print(dataUser);
 
-    if (dataUser != 'Fail') {
+    if (dataUser["auth_token"] != null) {
       Navigator.pop(context);
       print("success");
     } else {
