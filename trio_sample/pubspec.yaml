@@ -37,6 +37,7 @@ dependencies:
   flutter_image_compress: ^0.6.5+1
   compressimage: ^0.1.1
   permission_handler: ^5.0.0+hotfix.4
+  email_validator: ^1.0.4
   http:
 
 dev_dependencies:

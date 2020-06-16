@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'constants.dart';
+import 'package:email_validator/email_validator.dart';
 import 'loadingscreen.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -73,8 +74,9 @@ class _RegisterContainerState extends State<RegisterContainer> {
       Navigator.pop(context);
       print("success");
     } else {
+      List errors = dataUser["errors"];
       Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Phonenumber already exists')));
+          .showSnackBar(SnackBar(content: Text(errors.elementAt(0))));
     }
   }
 
@@ -125,11 +127,14 @@ class _RegisterContainerState extends State<RegisterContainer> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return "Field is Empty";
+                    } else if (value.toString().length < 8) {
+                      return "Min password length is 8";
                     } else {
                       return null;
                     }
                   },
                   hinttext: "Enter Password",
+                  controltext: "min 8 digits",
                   controller: password,
                   prefixicon: Icons.lock,
                   obscure: true,
@@ -141,6 +146,8 @@ class _RegisterContainerState extends State<RegisterContainer> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return "Field is Empty";
+                    } else if (!EmailValidator.validate(value)) {
+                      return "Invalid Email";
                     } else {
                       return null;
                     }
@@ -204,10 +211,12 @@ class CustomInputWidget extends StatelessWidget {
   final obscure;
   final inputtype;
   final controller;
+  final controltext;
   final validator;
   const CustomInputWidget({
     Key key,
     this.hinttext,
+    this.controltext,
     this.obscure,
     this.controller,
     this.inputtype,
@@ -229,6 +238,9 @@ class CustomInputWidget extends StatelessWidget {
         obscureText: obscure != null ? obscure : false,
         keyboardType: inputtype != null ? inputtype : TextInputType.text,
         decoration: InputDecoration(
+            counterText:
+                "" + (this.controltext == null ? "" : this.controltext),
+            counterStyle: TextStyle(color: Colors.white),
             enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Color(0xff7D8CA1))),
             prefixIcon: Icon(
