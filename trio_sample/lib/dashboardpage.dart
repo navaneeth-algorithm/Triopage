@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'loadingscreen.dart';
+import 'loginpage.dart';
 import 'dart:convert';
-import 'constants.dart';
-import 'dashboardpage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +27,11 @@ class _DashboardPageState extends State<DashboardPage> {
             tooltip: "Logout",
             onPressed: () {
               setUserId();
-              Navigator.pop(context);
+              //Navigator.pop(context);
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => LoginPage()),
+                  (route) => false);
             }),
         title: Text("Dashboard"),
         backgroundColor: Color(0xff8B80E6),

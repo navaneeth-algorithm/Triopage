@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'registerpage.dart';
 import 'loadingscreen.dart';
 import 'dart:convert';
-import 'constants.dart';
 import 'dashboardpage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'constants.dart';
 import 'package:email_validator/email_validator.dart';
 import 'loadingscreen.dart';
 
